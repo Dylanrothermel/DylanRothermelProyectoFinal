@@ -1,0 +1,90 @@
+#content{
+  display: flex;
+  flex-wrap: wrap;
+  padding: 60px;
+}
+
+.carrito-header {
+  font-weight: bold;
+  font-size: 1.25em;
+  color: #333;
+}
+
+.carrito-columna {
+  display: flex;
+  align-items: center;
+  border-bottom: 1px solid black;
+  margin-right: 1.5em;
+  padding-bottom: 10px;
+  margin-top: 10px;
+}
+
+.carrito-fila {
+  display: flex;
+}
+
+.carrito-item {
+  width: 45%;
+}
+
+.carrito-precio {
+  width: 20%;
+  font-size: 1.2em;
+  color: #333;
+}
+
+.carrito-cantidad {
+  width: 35%;
+}
+
+.carrito-item-title {
+  color: #333;
+  margin-left: .5em;
+  font-size: 1.2em;
+}
+
+
+.carrito-cantidad-input {
+  height: 34px;
+  width: 50px;
+  border-radius: 5px;
+  border: 1px solid #56CCF2;
+  background-color: #eee;
+  color: #333;
+  padding: 0;
+  text-align: center;
+  font-size: 1.2em;
+  margin-right: 25px;
+}
+
+.carrito-fila:last-child {
+  border-bottom: 1px solid black;
+}
+
+.carrito-fila:last-child .cart-column {
+  border: none;
+}
+
+.carrito-total {
+  text-align: end;
+  margin-top: 10px;
+  margin-right: 10px;
+}
+
+.carrito-total-titulo {
+  font-weight: bold;
+  font-size: 1.5em;
+  color: black;
+  margin-right: 20px;
+}
+
+.carrito-total-precio {
+  color: #333;
+  font-size: 1.1em;
+}
+
+.btn-comprar {
+  display: block;
+  margin: 40px auto 80px auto;
+  font-size: 1.75em;
+}
