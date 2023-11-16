@@ -27,33 +27,6 @@ function ready() {
     document.getElementsByClassName('btn-comprar')[0].addEventListener('click', botonComprar)
 }
 
-const divContenido = document.getElementById("content")
-
-
-const cargarProductos = async() => {
-    const resp = await fetch('https://mocki.io/v1/970b64de-dae8-48a9-8ba9-fc9efb420a36 ')
-    const productos = await resp.json()
-    productos.forEach(prod => {
-        const div = document.createElement("div")
-        div.innerHTML = `<div class="card" style="width: 400px;">
-        <div class="card-body">
-          <h5 class="card-title">${prod.nombre}</h5>
-          <p class="card-text">${prod.precio}</p>
-          <button class="btn btn-primary"type="button">Añadir al carrito</button>
-        </div>
-      </div>`
-      divContenido.appendChild(div)
-    })
-}
-
-cargarProductos()
-
-
-
-
-
-
-
 function botonComprar(){
     alert("Gracias por su compra")
     let carritoItems = document.getElementsByClassName("carrito-items")[0]
@@ -64,8 +37,20 @@ function botonComprar(){
 
 }
 
+function eliminarItems(event){
+    let botonclicked = event.target
+    botonclicked.parentElement.parentElement.remove()
+    actualizarCarrito()
 
+}
 
+function cantidadChange(event){
+    let input = event.target
+    if (isNaN(input.value) || input.value <= 0){
+        input.value = 1
+    }
+    actualizarCarrito()
+}
 
 function añadirACarritoclicked(event){
     let boton = event.target
@@ -76,6 +61,28 @@ function añadirACarritoclicked(event){
     actualizarCarrito()
     
 }
+
+const divContenido = document.getElementById("content")
+
+
+const cargarProductos = async() => {
+    const resp = await fetch('https://mocki.io/v1/970b64de-dae8-48a9-8ba9-fc9efb420a36')
+    const productos = await resp.json()
+    productos.forEach(prod => {
+        const div = document.createElement("div")
+        div.innerHTML = `<div class="card" style="width: 400px;">
+        <div class="card-body">
+          <h5 class="card-title">${prod.nombre}</h5>
+          <p class="card-text">${prod.precio}</p>
+          <button class="btn btn-primary" type="button">Añadir al carrito</button>
+        </div>
+      </div>`
+      divContenido.appendChild(div)
+    })
+}
+
+cargarProductos()
+
 
 function añadirAlCarrito(nombre, precio){
     let carritoFila = document.createElement('div')
@@ -106,21 +113,10 @@ function añadirAlCarrito(nombre, precio){
 
 
 
-function eliminarItems(event){
-    let botonclicked = event.target
-    botonclicked.parentElement.parentElement.remove()
-    actualizarCarrito()
-
-}
 
 
-function cantidadChange(event){
-    let input = event.target
-    if (isNaN(input.value) || input.value <= 0){
-        input.value = 1
-    }
-    actualizarCarrito()
-}
+
+
 
 function actualizarCarrito(){
     let carritoItemContainer = document.getElementsByClassName('carrito-items')[0]
@@ -139,9 +135,6 @@ function actualizarCarrito(){
     document.getElementsByClassName('carrito-total-precio')[0].innerText = '$' + total
 }
 
-function guardarCarrito(){
-    localStorage.setItem("Carrito", )
-}
 
 
 
