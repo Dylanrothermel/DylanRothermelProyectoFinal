@@ -1,7 +1,11 @@
+
+
 #content{
   display: flex;
   flex-wrap: wrap;
   padding: 60px;
+  gap: 10px;
+  border-radius: 1rem;
 }
 
 .carrito-header {
@@ -87,4 +91,13 @@
   display: block;
   margin: 40px auto 80px auto;
   font-size: 1.75em;
+}
+
+.footer{
+  background-color: aqua;
+  
+}
+
+.footer .tech {
+  font-size: 60px;
 }

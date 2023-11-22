@@ -1,4 +1,3 @@
-
 if (document.readyState == 'loading') {
     document.addEventListener('DOMContentLoaded', ready)
 } else {
@@ -19,16 +18,14 @@ function ready() {
             input.addEventListener("change", cantidadChange)
         }
     
-        let añadirACarritoBotones = document.getElementsByClassName("btn")
-        for(let i = 0; i < añadirACarritoBotones.length; i++){
-            let boton = añadirACarritoBotones[i]
-            boton.addEventListener("click", añadirACarritoclicked)
-        }
     document.getElementsByClassName('btn-comprar')[0].addEventListener('click', botonComprar)
 }
 
 function botonComprar(){
-    alert("Gracias por su compra")
+    Swal.fire({
+        icon: "success",
+        title: "Gracias por su compra"
+      })
     let carritoItems = document.getElementsByClassName("carrito-items")[0]
     while(carritoItems.hasChildNodes()){
         carritoItems.removeChild(carritoItems.firstChild)
@@ -64,24 +61,35 @@ function añadirACarritoclicked(event){
 
 const divContenido = document.getElementById("content")
 
-
-const cargarProductos = async() => {
-    const resp = await fetch('https://mocki.io/v1/970b64de-dae8-48a9-8ba9-fc9efb420a36')
-    const productos = await resp.json()
-    productos.forEach(prod => {
-        const div = document.createElement("div")
-        div.innerHTML = `<div class="card" style="width: 400px;">
-        <div class="card-body">
-          <h5 class="card-title">${prod.nombre}</h5>
-          <p class="card-text">${prod.precio}</p>
-          <button class="btn btn-primary" type="button">Añadir al carrito</button>
-        </div>
-      </div>`
-      divContenido.appendChild(div)
-    })
+async function cargarProductos(){
+    const resp = await fetch("https://mocki.io/v1/94efe7ec-5bc9-42cf-b9b2-19156d5c7f26")
+    const prods = await resp.json()
+    mostrarProds(prods)
 }
 
 cargarProductos()
+
+function mostrarProds(array) {
+    array.forEach((elemento => {
+        let div = document.createElement("div")
+        div.innerHTML = `<div class="card" style="width: 400px;">
+        <div class="card-body">
+          <img src="${elemento.imagen}" alt="">
+          <h5 class="card-title">${elemento.nombre}</h5>
+          <p class="card-text">${elemento.precio}</p>
+          <button class="btn btn-primary" id="${elemento.id}" type="button">Añadir al carrito</button>
+        </div>
+      </div>`
+      divContenido.appendChild(div)
+      const botonComprar = document.getElementById(`${elemento.id}`)
+      botonComprar.addEventListener("click", () => añadirAlCarrito(elemento.nombre, elemento.precio))
+      
+    }))
+}
+
+
+
+
 
 
 function añadirAlCarrito(nombre, precio){
@@ -91,7 +99,10 @@ function añadirAlCarrito(nombre, precio){
     let carritoItemNombres = carritoItems.getElementsByClassName('carrito-item-titulo')
     for (let i = 0; i < carritoItemNombres.length; i++) {
         if (carritoItemNombres[i].innerText == nombre) {
-            alert('Este item ya esta en el carrito')
+            Swal.fire({
+                icon: "error",
+                title: "Este item ya esta en el carrito"
+              })
             return
         }
     }
@@ -108,10 +119,15 @@ function añadirAlCarrito(nombre, precio){
     carritoItems.append(carritoFila)
     carritoFila.getElementsByClassName("boton")[0].addEventListener("click", eliminarItems)
     carritoFila.getElementsByClassName("carrito-cantidad-input")[0].addEventListener("change", cantidadChange)
+    actualizarCarrito()
+    Toastify({
+
+        text: `${nombre} fue añadido con exito al carrito`,
     
+        duration: 2000,
+    
+        }).showToast();
 }
-
-
 
 
 
@@ -134,6 +150,8 @@ function actualizarCarrito(){
     total = Math. round(total * 1e8) / 1e8
     document.getElementsByClassName('carrito-total-precio')[0].innerText = '$' + total
 }
+
+
 
 
 
